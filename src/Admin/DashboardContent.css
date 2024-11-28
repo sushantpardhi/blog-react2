@@ -17,9 +17,13 @@
 .dashboard-metrics-cards {
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   justify-content: space-between;
   gap: 20px;
   padding: 0 25px;
+=======
+  justify-content: space-around;
+>>>>>>> 7b2bb0a665ce71bd389921191279d95189c70abf
 }
 
 .dashboard-users-title{

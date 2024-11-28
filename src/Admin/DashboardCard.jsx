@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useMemo, useCallback } from "react";
 import "./DashboardCard.css";
 import { Line } from "react-chartjs-2";
@@ -219,6 +220,13 @@ const DashboardCard = ({ title, total, percentage, datasets, labels }) => {
       </div>
     </div>
   );
+=======
+import React from "react";
+import "./DashboardCard.css";
+
+const DashboardCard = () => {
+  return <div className="dashboard-card"></div>;
+>>>>>>> 7b2bb0a665ce71bd389921191279d95189c70abf
 };
 
 export default DashboardCard;

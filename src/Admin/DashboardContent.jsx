@@ -3,6 +3,7 @@ import "./DashboardContent.css";
 import DashboardCard from "./DashboardCard";
 
 const DashboardContent = () => {
+<<<<<<< HEAD
   const visitsData = {
     title: "Page Views",
     total: "14,328",
@@ -172,10 +173,13 @@ const DashboardContent = () => {
     ],
   };
 
+=======
+>>>>>>> 7b2bb0a665ce71bd389921191279d95189c70abf
   return (
     <div className="dashboard-content">
       <h2 className="dashboard-metrics-title">Metrics</h2>
       <div className="dashboard-metrics-cards">
+<<<<<<< HEAD
         <DashboardCard {...visitsData} />
         <DashboardCard {...timeSpentData} />
       </div>
@@ -188,6 +192,20 @@ const DashboardContent = () => {
       <div className="dashboard-blogs-cards">
         <DashboardCard {...blogStatusData} />
         <DashboardCard {...newBlogsData} />
+=======
+        <DashboardCard />
+        <DashboardCard />
+      </div>
+      <h2 className="dashboard-users-title">Users</h2>
+      <div className="dashboard-users-cards">
+        <DashboardCard />
+        <DashboardCard />
+      </div>
+      <h2 className="dashboard-blogs-title">Blogs</h2>
+      <div className="dashboard-blogs-cards">
+        <DashboardCard />
+        <DashboardCard />
+>>>>>>> 7b2bb0a665ce71bd389921191279d95189c70abf
       </div>
     </div>
   );

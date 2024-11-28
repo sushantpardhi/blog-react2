@@ -1,0 +1,105 @@
+.register-input {
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin-top: 5px;
+}
+
+.register-container {
+  height: 99dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../assets/register-background.jpg");
+  background-size: cover;
+}
+
+.register-form {
+  /* border: 1px solid grey; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: max-content;
+  gap: 0.5rem;
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  padding: 0;
+  /* margin: 0; */
+}
+
+.name {
+  display: flex;
+  gap: 3rem;
+}
+
+.first-name-cont {
+  display: flex;
+  flex-direction: column;
+}
+.last-name-cont {
+  display: flex;
+  flex-direction: column;
+}
+.username-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.email-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.password-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.confirm-password-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.register-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(1, 170, 211); /* Blue background */
+  color: white; /* White text */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: rgb(0, 148, 204); /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.register-button:active {
+  background-color: rgb(0, 148, 204); /* Even darker blue on click */
+  transform: scale(1); /* Reset scale on click */
+}
+
+.form-end {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.form-end a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}

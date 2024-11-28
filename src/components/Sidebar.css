@@ -1,5 +1,41 @@
 .sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
   flex: 1;
-  height: 50vh;
-  background-color: antiquewhite;
+  background-color: #ffffff;
+  padding: 2rem 1rem;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.tab.active {
+  background-color: #f0f0f0;
+  color: #000;
+  font-weight: 500;
+}
+
+.tab-icon {
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.tab span {
+  font-size: 0.95rem;
 }

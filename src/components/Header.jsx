@@ -3,7 +3,7 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <div className="header">
       <div className="logo">LOGO</div>

@@ -5,8 +5,8 @@ import DashboardCard from "../DashboardCard";
 const BlogsSection = () => {
   return (
     <>
-      <h2 className="dashboard-blogs-title">Blogs</h2>
-      <div className="dashboard-blogs-cards">
+      <h2 className="section-heading">Blogs</h2>
+      <div className="dashboard-cards">
         <DashboardCard {...blogStatusData} />
         <DashboardCard {...newBlogsData} />
       </div>

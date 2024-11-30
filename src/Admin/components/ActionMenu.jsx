@@ -7,6 +7,7 @@ import LockUserModal from "./modals/LockUserModal";
 const ActionMenu = ({ userId, userData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -84,10 +85,34 @@ const ActionMenu = ({ userId, userData }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: `${rect.bottom + 8}px`,
+        left: `${rect.left - 180 + rect.width}px`, // Align right side with button
+      });
+    }
+  };
+
   const toggleMenu = (e) => {
     e.stopPropagation();
+    if (!isOpen) {
+      updateDropdownPosition();
+    }
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        updateDropdownPosition();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, true);
+    return () => window.removeEventListener('scroll', handleScroll, true);
+  }, [isOpen]);
 
   return (
     <div className="action-menu">
@@ -100,7 +125,14 @@ const ActionMenu = ({ userId, userData }) => {
         ⋮
       </button>
       {isOpen && (
-        <ul ref={menuRef} className="action-menu-dropdown">
+        <ul 
+          ref={menuRef} 
+          className="action-menu-dropdown"
+          style={{
+            top: dropdownPosition.top,
+            left: dropdownPosition.left,
+          }}
+        >
           <li className="detail-list-item">
             <button
               className="dropdown-button"

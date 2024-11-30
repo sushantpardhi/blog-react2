@@ -5,8 +5,8 @@ import { visitsData, timeSpentData } from "../data/dashboardData";
 const MetricsSection = () => {
   return (
     <>
-      <h2 className="dashboard-metrics-title">Metrics</h2>
-      <div className="dashboard-metrics-cards">
+      <h2 className="section-heading">Metrics</h2>
+      <div className="dashboard-cards">
         <DashboardCard {...visitsData} />
         <DashboardCard {...timeSpentData} />
       </div>

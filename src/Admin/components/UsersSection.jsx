@@ -6,7 +6,7 @@ const UsersSection = () => {
   return (
     <>
       <h2 className="section-heading">Users</h2>
-      <div className="dashboard-users-cards">
+      <div className="dashboard-cards">
         <DashboardCard {...usersData} />
         <DashboardCard {...newUsersData} />
       </div>

@@ -101,7 +101,7 @@
 .controls-left {
   display: flex;
   align-items: center;
-  gap: 60px; 
+  gap: 25px; 
   flex: 1;
   max-width: 600px; 
 }

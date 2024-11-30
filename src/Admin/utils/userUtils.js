@@ -5,7 +5,7 @@ import {
   STATUSES,
 } from "../constants/userConstants";
 
-const getRandomElement = (array) =>
+export const getRandomElement = (array) =>
   array[Math.floor(Math.random() * array.length)];
 
 const generateRandomDate = (start, end) => {
@@ -33,3 +33,4 @@ export const generateUsers = (count = 120) => {
     };
   });
 };
+

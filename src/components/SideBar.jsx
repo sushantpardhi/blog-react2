@@ -1,38 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
-import { FiHome, FiUser, FiFileText } from "react-icons/fi";
 
-const SideBar = ({ onTabClick }) => {
-  const [activeTab, setActiveTab] = useState("Tab1");
+const SideBar = ({ menuItems, onTabClick, isCollapsed, setIsCollapsed }) => {
+  const [activeTab, setActiveTab] = useState(menuItems[0]?.id || "");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     onTabClick(tab);
+    if (isMobile && setIsCollapsed) {
+      setIsCollapsed(true);
+    }
   };
 
   return (
-    <div className="sidebar">
-      <div
-        className={`tab ${activeTab === "Tab1" ? "active" : ""}`}
-        onClick={() => handleTabClick("Tab1")}
-      >
-        <FiHome className="tab-icon" />
-        <span>Dashboard</span>
-      </div>
-      <div
-        className={`tab ${activeTab === "Tab2" ? "active" : ""}`}
-        onClick={() => handleTabClick("Tab2")}
-      >
-        <FiUser className="tab-icon" />
-        <span>User</span>
-      </div>
-      <div
-        className={`tab ${activeTab === "Tab3" ? "active" : ""}`}
-        onClick={() => handleTabClick("Tab3")}
-      >
-        <FiFileText className="tab-icon" />
-        <span>Blogs</span>
-      </div>
+    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      {menuItems.map((item) => (
+        <div
+          key={item.id}
+          className={`tab ${activeTab === item.id ? "active" : ""}`}
+          onClick={() => handleTabClick(item.id)}
+        >
+          {item.icon && <span className="tab-icon">{item.icon}</span>}
+          <span className="tab-label">{item.label}</span>
+        </div>
+      ))}
     </div>
   );
 };

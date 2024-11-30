@@ -1,12 +1,11 @@
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
-  padding-top: 60px; 
 }
 
 .content {
-  flex: 6;
-  padding: 20px;
-  margin-left: 300px; 
+  flex: 1;
+  padding: 2rem;
+  margin-left: var(--sidebar-width);
 }
 

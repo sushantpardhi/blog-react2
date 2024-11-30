@@ -2,37 +2,59 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ isCollapsed, setIsCollapsed }) => {
   const isLoggedIn = true;
-  return (
-    <div className="header">
-      <div className="logo">LOGO</div>
+  const isAdmin = true; // Mock admin check
 
-      {isLoggedIn ? (
-        <div className="info-profile-cont">
-          <div className="info-profile-image">
-            <img
-              className="info-profilepic"
-              src="https://placehold.co/120x80"
-              alt="profile"
-            />
-          </div>
-          <div className="info-user-details">
-            <p className="info-user-name">Sushant Pardhi</p>
-            <p className="info-user-email">sushantgpardhi@gmail.com</p>
-          </div>
-        </div>
-      ) : (
-        <div className="auth-cont">
-          <Link to="/login">
-            <button className="header-login-button">Login</button>
+  return (
+    <header className="header">
+      <div className="header-left">
+        <button
+          className="header-hamburger"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          ☰
+        </button>
+        <Link to="/" className="header-logo logo">
+          BLOG
+        </Link>
+      </div>
+
+      <div className="header-right">
+        {isLoggedIn && isAdmin && (
+          <Link to="/dashboard" className="dashboard-btn">
+            Dashboard
           </Link>
-          <Link to="/register">
-            <button className="header-register-button">Sign Up</button>
+        )}
+
+        {isLoggedIn ? (
+          <Link to="/profile" className="header-logo">
+            <div className="info-profile-cont">
+              <img
+                className="info-profilepic"
+                src="https://placehold.co/120x80"
+                alt="profile"
+              />
+              <div className="info-user-details">
+                <span className="info-user-name">Sushant Pardhi</span>
+                <span className="info-user-email">
+                  sushantgpardhi@gmail.com
+                </span>
+              </div>
+            </div>
           </Link>
-        </div>
-      )}
-    </div>
+        ) : (
+          <nav className="auth-cont">
+            <Link to="/login" className="header-btn">
+              Login
+            </Link>
+            <Link to="/register" className="header-btn header-btn-primary">
+              Sign Up
+            </Link>
+          </nav>
+        )}
+      </div>
+    </header>
   );
 };
 

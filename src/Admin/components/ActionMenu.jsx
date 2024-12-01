@@ -3,15 +3,55 @@ import UserDetailsModal from "./modals/UserDetailsModal";
 import EditUserModal from "./modals/EditUserModal";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import LockUserModal from "./modals/LockUserModal";
+import BlogDetailsModal from "./modals/BlogDetailsModal";
+import EditBlogModal from "./modals/EditBlogModal";
 
-const ActionMenu = ({ userId, userData }) => {
+const ActionMenu = ({ userId, userData, blogId, blogData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
+  const isBlogContext = Boolean(blogId && blogData);
+
   const getStatusActions = (status) => {
+    if (isBlogContext) {
+      switch (status) {
+        case "Inactive":
+          return [
+            {
+              action: "publish",
+              title: "Publish Blog",
+              message: `Are you sure you want to publish "${blogData.name}"?`,
+            },
+          ];
+        case "Active":
+          return [
+            {
+              action: "unpublish",
+              title: "Unpublish Blog",
+              message: `Are you sure you want to unpublish "${blogData.name}"?`,
+            },
+          ];
+        case "Pending":
+          return [
+            {
+              action: "approve",
+              title: "Approve Blog",
+              message: `Are you sure you want to approve "${blogData.name}"?`,
+            },
+            {
+              action: "reject",
+              title: "Reject Blog",
+              message: `Are you sure you want to reject "${blogData.name}"?`,
+            },
+          ];
+        default:
+          return [];
+      }
+    }
+
     switch (status) {
       case "locked":
         return [
@@ -57,7 +97,9 @@ const ActionMenu = ({ userId, userData }) => {
     }
   };
 
-  const statusActions = getStatusActions(userData.status);
+  const statusActions = getStatusActions(
+    isBlogContext ? blogData?.status : userData?.status
+  );
 
   const handleAction = (action) => {
     setIsOpen(false);
@@ -65,8 +107,13 @@ const ActionMenu = ({ userId, userData }) => {
   };
 
   const handleConfirmAction = (action, additionalData = {}) => {
-    console.log(`Confirmed ${action} for user ${userId}`, additionalData);
-    // Add actual action handling logic here
+    if (isBlogContext) {
+      console.log(`Confirmed ${action} for blog ${blogId}`, additionalData);
+      // Add blog action handling logic here
+    } else {
+      console.log(`Confirmed ${action} for user ${userId}`, additionalData);
+      // Add user action handling logic here
+    }
   };
 
   useEffect(() => {
@@ -110,8 +157,8 @@ const ActionMenu = ({ userId, userData }) => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, true);
-    return () => window.removeEventListener('scroll', handleScroll, true);
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
   }, [isOpen]);
 
   return (
@@ -125,8 +172,8 @@ const ActionMenu = ({ userId, userData }) => {
         ⋮
       </button>
       {isOpen && (
-        <ul 
-          ref={menuRef} 
+        <ul
+          ref={menuRef}
           className="action-menu-dropdown"
           style={{
             top: dropdownPosition.top,
@@ -148,7 +195,7 @@ const ActionMenu = ({ userId, userData }) => {
               onClick={() => handleAction("edit")}
               data-action="edit"
             >
-              Edit User
+              Edit {isBlogContext ? "Blog" : "User"}
             </button>
           </li>
           {statusActions.map(({ action, title }) => (
@@ -173,15 +220,36 @@ const ActionMenu = ({ userId, userData }) => {
           </li>
         </ul>
       )}
-      {activeModal === "view" && (
-        <UserDetailsModal
-          user={userData}
-          onClose={() => setActiveModal(null)}
-        />
-      )}
-
-      {activeModal === "edit" && (
-        <EditUserModal user={userData} onClose={() => setActiveModal(null)} />
+      {isBlogContext ? (
+        <>
+          {activeModal === "view" && (
+            <BlogDetailsModal
+              blog={blogData}
+              onClose={() => setActiveModal(null)}
+            />
+          )}
+          {activeModal === "edit" && (
+            <EditBlogModal
+              blog={blogData}
+              onClose={() => setActiveModal(null)}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {activeModal === "view" && (
+            <UserDetailsModal
+              user={userData}
+              onClose={() => setActiveModal(null)}
+            />
+          )}
+          {activeModal === "edit" && (
+            <EditUserModal
+              user={userData}
+              onClose={() => setActiveModal(null)}
+            />
+          )}
+        </>
       )}
 
       {activeModal === "lock" ? (
@@ -207,8 +275,10 @@ const ActionMenu = ({ userId, userData }) => {
 
       {activeModal === "delete" && (
         <ConfirmationModal
-          title="Delete User"
-          message={`Are you sure you want to delete ${userData.name}? This action cannot be undone.`}
+          title={`Delete ${isBlogContext ? "Blog" : "User"}`}
+          message={`Are you sure you want to delete ${
+            isBlogContext ? blogData.name : userData.name
+          }? This action cannot be undone.`}
           onConfirm={() => handleConfirmAction("delete")}
           onClose={() => setActiveModal(null)}
         />

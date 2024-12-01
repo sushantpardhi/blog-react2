@@ -1,0 +1,88 @@
+.stat-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  grid-column: var(--grid-column, auto);
+  width: 100%;
+}
+
+.stat-card {
+  cursor: pointer;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #e2e8f0;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  color: #64748b;
+}
+
+.stat-card p {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.metric-detail {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    padding: 1.5rem;
+  }
+
+  .stat-card p {
+    font-size: 2rem;
+  }
+}
+
+.expanded-row .stat-card {
+  align-self: flex-start; /* Add this to keep original height */
+  margin-top: 0.5rem; /* Optional: align with chart section header */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.expanded-row {
+  opacity: 1;
+}
+
+/* Style for cards that move below expanded card */
+.expanded-row ~ .stat-card-wrapper {
+  transition-delay: 0.2s; /* Delay the movement of cards below */
+}
+
+/* Remove entering/entered classes since we're using different animation approach */
+/* ...rest of existing code... */

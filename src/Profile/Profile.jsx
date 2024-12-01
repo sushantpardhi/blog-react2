@@ -13,6 +13,9 @@ import {
 } from "react-icons/fi";
 import PersonalInformation from "./PersonalInformation";
 import Layout from "../components/Layout";
+import MyBlogPosts from "./MyBlogPosts";
+import CommentHistory from "./CommentHistory";
+import BlogAnalytics from "./BlogAnalytics";
 
 const Profile = () => {
   const [activeSection, setActiveSection] = useState("personal");
@@ -38,11 +41,11 @@ const Profile = () => {
       case "personal":
         return <PersonalInformation />;
       case "posts":
-        return <h2 className="section-title">My Blog Posts Management</h2>;
+        return <MyBlogPosts />;
       case "comments":
-        return <h2 className="section-title">My Comments History</h2>;
+        return <CommentHistory />;
       case "analytics":
-        return <h2 className="section-title">Blog Analytics Dashboard</h2>;
+        return <BlogAnalytics />;
       case "saved":
         return <h2 className="section-title">Saved Posts Section</h2>;
       case "security":

@@ -84,9 +84,13 @@ const MyBlogPosts = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 12;
 
   const blogPosts = generateDummyData();
-  const allCategories = [...new Set(blogPosts.flatMap(post => post.categories))];
+  const allCategories = [
+    ...new Set(blogPosts.flatMap((post) => post.categories)),
+  ];
 
   const filteredAndSortedPosts = useMemo(() => {
     let filtered = blogPosts;
@@ -94,22 +98,23 @@ const MyBlogPosts = () => {
     // Search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.categories.some(cat => cat.toLowerCase().includes(query)) ||
-        post.author.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt.toLowerCase().includes(query) ||
+          post.categories.some((cat) => cat.toLowerCase().includes(query)) ||
+          post.author.toLowerCase().includes(query)
       );
     }
 
     // Filter by status
     if (activeStatus !== "All") {
-      filtered = filtered.filter(post => post.status === activeStatus);
+      filtered = filtered.filter((post) => post.status === activeStatus);
     }
 
     // Filter by category
     if (activeCategory !== "All") {
-      filtered = filtered.filter(post => 
+      filtered = filtered.filter((post) =>
         post.categories.includes(activeCategory)
       );
     }
@@ -128,6 +133,19 @@ const MyBlogPosts = () => {
     });
   }, [blogPosts, activeStatus, activeCategory, sortBy, searchQuery]);
 
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    return filteredAndSortedPosts.slice(startIndex, endIndex);
+  }, [filteredAndSortedPosts, currentPage]);
+
+  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="blog-posts-section">
       <FilterTabs
@@ -142,10 +160,39 @@ const MyBlogPosts = () => {
         setSearchQuery={setSearchQuery}
       />
       <div className="my-blog-post-container">
-        {filteredAndSortedPosts.map((post) => (
+        {paginatedPosts.map((post) => (
           <BlogCard key={post.id} {...post} />
         ))}
       </div>
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="pagination-button"
+          >
+            Previous
+          </button>
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`pagination-button ${
+                currentPage === index + 1 ? "active" : ""
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="pagination-button"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

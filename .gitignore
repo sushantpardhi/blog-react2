@@ -6,6 +6,11 @@
 .pnp.js
 /.idea
 
+# environment variables
+.env
+.env.*
+!.env.example
+
 # testing
 /coverage
 
